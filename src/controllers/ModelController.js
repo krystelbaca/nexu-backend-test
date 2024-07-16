@@ -36,13 +36,25 @@ const listModels = async (req, res) => {
 
 const editModel = async (req, res) => {
   const { id } = req.params
+  const { average_price } = req.body
 
   try {
-    const response = await updateModel(id, body)
+    if (average_price <= 100000) {
+      return res.status(400).json({
+        message: 'The new price must be greater than 100,000'
+      })
+    }
+
+    const response = await updateModel(id, average_price)
+
+    if (response.message === 'Model not found') {
+      return res.status(404).json(response);
+    }
+
     res.status(200).json(response)
   } catch (error) {
     res.status(500).json({
-      message: 'Error editing model',
+      message: 'Error updating model price',
       error: error.message
     })
   }

@@ -42,19 +42,21 @@ const getModels = async (greater, lower) => {
   }
 }
 
-const findModelById = async (id) => {
-  return Model.find({
-    id: id
-  })
-}
-
-const updateModel = async (id, body) => {
+const updateModel = async (id, newPrice) => {
   try {
-    const model = await findModelById(id)
-    if (!model) {
-      throw new Error('Model not found')
+    const updatedModel = await Model.findOneAndUpdate(
+      { id: id },
+      { averagePrice: newPrice },
+      { new: true }
+    )
+
+    if (!updatedModel) {
+      return {
+        message: 'Model not found'
+      }
     }
-    const editedModel = await Model.updateOne()
+
+    return updatedModel
   } catch (error) {
     error.message
   }

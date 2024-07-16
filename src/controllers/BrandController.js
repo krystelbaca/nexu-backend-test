@@ -1,7 +1,11 @@
-const { listBrand, listModelsByBrand } = require('../services/BrandService')
-const getAllBrands = async (req, res) => {
+const { 
+  getBrands,
+  createBrand
+} = require('../services/BrandService')
+
+const listAllBrands = async (req, res) => {
   try {
-    const brands = await listBrand()
+    const brands = await getBrands()
     res.status(200).json(brands)
   } catch (error) {
     res.status(500).json({ 
@@ -11,26 +15,21 @@ const getAllBrands = async (req, res) => {
   }
 }
 
-const getModelsByBrand = async (req, res) => {
-  /**
-   * The requirement says by brandId, 
-   * but to use the data provided I changed for brand name
-   */
+const addNewBrand = async (req, res) => {
   try {
-    const { brand } = req.params
+    const { body } = req
+    const brand = await createBrand(body)
 
-    const models = await listModelsByBrand(brand)
-
-    res.status(200).json(models)
+    res.status(201).json(brand)
   } catch (error) {
     res.status(500).json({
-      message: 'Error retrieving models',
+      message: 'Error creating a new brand',
       error 
     })
   }
 }
 
 module.exports = {
-  getAllBrands,
-  getModelsByBrand
+  listAllBrands,
+  addNewBrand
 }

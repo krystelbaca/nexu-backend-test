@@ -17,6 +17,8 @@ db.once('open', () => {
   console.log('Service connected to MongoDB successfully')
 })
 
+app.use(express.json())
+
 app.use('/', router)
 
 app.listen(PORT, () => {

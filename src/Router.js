@@ -3,21 +3,26 @@ const express = require('express')
 const router = express.Router()
 
 const { 
-  getAllBrands,
-  getModelsByBrand,
-  createNewBrand
+  listAllBrands,
+  addNewBrand
 } = require('./controllers/BrandController')
 
-router.get('/brands', getAllBrands)
+const { 
+  listModelsByBrandId,
+  listModels,
+  editModel 
+} = require('./controllers/ModelController')
 
-router.get('/brands/:brand/models', getModelsByBrand)
+router.get('/brands', listAllBrands)
 
-router.post('/brands', createNewBrand)
+router.get('/brands/:id/models', listModelsByBrandId)
+
+router.post('/brands', addNewBrand)
 
 router.post('/brands/:id/models')
 
-router.put('/models/:id')
+router.put('/models/:id', editModel)
 
-router.get('/models')
+router.get('/models', listModels)
 
 module.exports = router

@@ -5,9 +5,10 @@ const {
 } = require('../services/ModelService')
 
 const listModelsByBrandId = async (req, res) => {
-  const { brandId } = req.params
+  const { id } = req.params
   try {
-    const models = await getModelsByBrandId(brandId)
+    const models = await getModelsByBrandId(id)
+
     res.status(200).json(models.map(model => ({
       id: model.id,
       name: model.model,

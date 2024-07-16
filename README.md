@@ -1,111 +1,215 @@
 # Nexu Backend Coding Exercise
-Our goal is to give you a small coding challenge that gives you a chance to show off your skills while giving you an idea of some of the problems that you may encounter at Nexu. We know you're busy with life, so we hope that you can spend around 2 hours working through this exercise. We don't expect you to finish in 2 hours, so don't worry if you can't. Submit what you have along with some notes on your thoughts and how you would proceed if you had more time. Most importantly, try to have some fun with it!
+This project is a backend API for managing brands and their models. The API is built with Node.js and Express, and it uses MongoDB as the database.
 
-## Overview
-You just got hired to join the *cool* engineering team at *Nexu*! The first story in your sprint backlog is to build a backend application for an already existing frontend. The frontend needs the next routes:
+## API description
 
-
-```
-                              GET    /brands
-                              GET    /brands/:id/models
-                              POST   /brands
-                              POST   /brands/:id/models
-                              PUT    /models/:id
-                              GET    /models
-```
+### Brands
 
 #### GET /brands
 
 List all brands 
+Response example:
 ```json
 [
-  {"id": 1, "nombre": "Acura", "average_price": 702109},
-  {"id": 2, "nombre": "Audi", "average_price": 630759},
-  {"id": 3, "nombre": "Bentley", "average_price": 3342575},
-  {"id": 4, "nombre": "BMW", "average_price": 858702},
-  {"id": 5, "nombre": "Buick", "average_price": 290371},
-  "..."
+	{
+		"id": "6695c4c8726f7c1cf0bf0ec7",
+		"name": "Audi",
+		"average_price": 630759
+	},
+	{
+		"id": "6695c4c8726f7c1cf0bf0ec9",
+		"name": "BMW",
+		"average_price": 858702
+	},
 ]
 ```
-The average price of each brand is the average of its models average prices
 
 #### GET /brands/:id/models
 
 List all models of the brand
+Path param: 
+```id: brandId``` 
+
+Response example:
 ```json
 [
-  {"id": 1, "name": "ILX", "average_price": 303176},
-  {"id": 2, "name": "MDX", "average_price": 448193},
-  {"id": 1264, "name": "NSX", "average_price": 3818225},
-  {"id": 3, "name": "RDX", "average_price": 395753},
-  {"id": 354, "name": "RL", "average_price": 239050}
+{
+		"id": 1,
+		"name": "ILX",
+		"average_price": 303176
+	},
+	{
+		"id": 2,
+		"name": "MDX",
+		"average_price": 448193
+	},
+	{
+		"id": 3,
+		"name": "RDX",
+		"average_price": 395753
+	}
 ]
 ```
 
 #### POST /brands
 
 You may add new brands. A brand name must be unique.
-
+Body:
 ```json
 {"name": "Toyota"}
 ```
+Response example:
 
-If a brand name is already in use return a response code and error message reflecting it.
+```json
+{
+	"name": "Random new brand",
+	"_id": "6695c2a74d6d33295b300691"
+}
+```
 
+If brand exists:
+
+```json
+{
+	"message": "Error creating a new brand"
+}
+```
 
 #### POST /brands/:id/models
 
 You may add new models to a brand. A model name must be unique inside a brand.
-
-```json
-{"name": "Prius", "average_price": 406400}
+Path Param:
 ```
-If the brand id doesn't exist return a response code and error message reflecting it.
+id: brand_id
+```
 
-If the model name already exists for that brand return a response code and error message reflecting it.
-
-Average price is optional, if supply it must be greater than 100,000.
-
+Body:
+```json
+{
+	"name": "A new model",
+	"average_price": "200000"
+}
+```
+Response example:
+```json
+{
+	"model": "A new model",
+	"averagePrice": 200000,
+	"brand": "6696a5e20a75da5959be9475",
+	"_id": "6696c94589610d3930dc1d74"
+}
+```
+### Models
 
 #### PUT /models/:id
 
+Path param:
+```
+id: 7
+```
 You may edit the average price of a model.
 
+Body
+
 ```json
-{"average_price": 406400}
+{"average_price": 270000}
 ```
 The average_price must be greater then 100,000.
+
+Response example:
+```json
+{
+	"_id": "6695c4c8726f7c1cf0bf0f0a",
+	"id": 7,
+	"model": "A1",
+	"averagePrice": 270000,
+	"brand": "6695c4c8726f7c1cf0bf0ec7"
+}
+```
 
 #### GET /models?greater=&lower=
 
 List all models. 
 If greater param is included show all models with average_price greater than the param
 If lower param is included show all models with average_price lower than the param
+
+Query params:
 ```
-# /models?greater=380000&lower=400000
+greater: 800000
+
+lower: 1000000
 ```
+Response example:
 ```json
 [
-  {"id": 1264, "name": "NSX", "average_price": 3818225},
-  {"id": 3, "name": "RDX", "average_price": 395753}
+{
+		"id": 54,
+		"name": "X6",
+		"average_price": 898716
+	},
+	{
+		"id": 162,
+		"name": "QX80",
+		"average_price": 951850
+	},
+	{
+		"id": 175,
+		"name": "Defender",
+		"average_price": 923797
+	},
+	{
+		"id": 269,
+		"name": "Cayenne",
+		"average_price": 941314
+	}
 ]
 ```
 
-- Code all the endpoints and the logic needed
+## Setup Instructions
 
-- Create a database to store this information
+### Prerequisites
 
-- Populate the database from the json included in this repository
+- Node.js (v12 or higher)
+- npm (v6 or higher)
+- MongoDB
 
-## Requirements
-- your code should be linted
-- your code should include at least a couple of tests
-- your code should include a `README.md` file in the root with instructions for building, running, and testing. It can also include notes on your thought process and any issues you may have run into.
+#### Run the project
+1. Install dependencies:
+```           npm install ```
 
-## Submission
-Please upload this repository to Github and submit to @remigioamc when complete. Also, we would love your feedback, so feel free to share your thoughts on the exercise!
+2. Seed the database:
+``` npm run seed```
 
-## Bonus
-Deploy your application so we can test it against our frontend. Share the URL.
+3. Start the server:
+```npm start ```
+The server will start on the port 3002
 
+4. Test:
+```npm test```
 
+### Directory Structure
+```
+nexu-backend-test/
+├── src/        
+│   ├── controllers/
+│   │   ├── BrandController.js 
+│   │   └── ModelController.js
+│   ├── data/
+│   │   └── seeder.js
+│   │   └── models.json
+│   ├── models/
+│   │   ├── Brand.js        
+│   │   └── Model.js  
+│   ├── services/
+│   │   ├── BrandService.js  
+│   │   └── ModelService.js
+│   ├── test/
+│   │   ├── BrandController.test.js  
+│   │   └── ModelController.test.js   
+│   └── App.js
+|   └── Router.js               
+├── .gitignore
+├── jest.config.js
+├── package.json             
+└── README.md                
+```

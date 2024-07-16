@@ -213,3 +213,14 @@ nexu-backend-test/
 ├── package.json             
 └── README.md                
 ```
+### Comments | Observations
+1. EL JSON con la data, podiamos omitir el ID de los elementos, ya que al trabajar en una base de datos tanto relacional como no relacional, genera estos ids.
+
+##### To improve
+1. Por cuestiones prácticas, hice un sólo routeador, sin embargo al crecer, lo mejor sería separar las rutas por módulo (Models, Brands, etc)
+2. La configuración de ESLint, pude haberla hecho primero y no al final.
+3. Agregar más test para los servicios.
+
+
+##### Author:
+Krystel Baca

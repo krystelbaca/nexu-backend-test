@@ -1,0 +1,18 @@
+{
+  "name": "nexu-backend-test",
+  "version": "1.0.0",
+  "description": "Our goal is to give you a small coding challenge that gives you a chance to show off your skills while giving you an idea of some of the problems that you may encounter at Nexu. We know you're busy with life, so we hope that you can spend around 2 hours working through this exercise. We don't expect you to finish in 2 hours, so don't worry if you can't. Submit what you have along with some notes on your thoughts and how you would proceed if you had more time. Most importantly, try to have some fun with it!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/App.js",
+    "seed": "node src/data/seeder.js",
+    "test": "test"
+  },
+  "author": "Krystel Baca",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "fs": "^0.0.1-security",
+    "mongoose": "^8.5.1"
+  }
+}

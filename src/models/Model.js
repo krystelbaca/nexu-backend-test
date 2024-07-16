@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const modelSchema = new mongoose.Schema({
   id: {
     type: Number,
-    required: true
+    required: false,
   },
   model: {
     type: String,
@@ -11,7 +11,7 @@ const modelSchema = new mongoose.Schema({
   },
   averagePrice: {
     type: Number,
-    required: true
+    required: true,
   },
   brand: {
     type: mongoose.Schema.Types.ObjectId,

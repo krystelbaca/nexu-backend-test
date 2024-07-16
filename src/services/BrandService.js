@@ -55,7 +55,38 @@ const createBrand = async (body) => {
   }
 }
 
+const createNewModelToBrand = async (brandId, name, average_price) => {
+  try {
+    const brand = await Brand.findById(brandId)
+
+    if (!brand) {
+      return { message: 'Brand not found' }
+    }
+
+    const existingModel = await Model.findOne({ 
+      brand: brandId,
+      model: name 
+    })
+  
+    if (existingModel) {
+      return { message: 'Model name already exists for this brand' }
+    }
+  
+    const newModel = new Model({
+      model: name,
+      averagePrice: average_price,
+      brand: brandId
+    })
+
+    await newModel.save()
+    return newModel
+  } catch (error) {
+    return error.message
+  }
+}
+
 module.exports = {
   getBrands,
-  createBrand
+  createBrand,
+  createNewModelToBrand
 }
